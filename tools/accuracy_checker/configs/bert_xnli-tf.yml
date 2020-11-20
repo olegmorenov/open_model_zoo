@@ -29,6 +29,7 @@ models:
                 - input_mask
                 - segment_ids
 
+        metrics:
           - name: top1
             type: accuracy
             top_k: 1
