@@ -1,5 +1,5 @@
 models:
-  - name: bert_xnli
+  - name: bert-base-chinese-xnli-zh
     launchers:
       - framework: dlsdk
         adapter:
@@ -19,9 +19,7 @@ models:
 
     datasets:
       - name: xnli
-        annotation_conversion:
-            converter: text_classification_pickle
-            annotation_file: XNLI/bert_xnli_annotation.pickle
+
         reader:
             type: annotation_features_extractor
             features:
@@ -33,5 +31,3 @@ models:
           - name: top1
             type: accuracy
             top_k: 1
-
-global_definitions: ../dataset_definitions.yml
