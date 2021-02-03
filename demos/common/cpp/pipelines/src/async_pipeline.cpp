@@ -52,6 +52,7 @@ AsyncPipeline::AsyncPipeline(std::unique_ptr<ModelBase>&& modelInstance, const C
 
     if (file_ext == "blob")
     {
+        slog::info << "Import network file" << slog::endl;
         execNetwork = engine.ImportNetwork(model->getModelFileName(), cnnConfig.devices, {});
     }
     else if (file_ext == "xml")
