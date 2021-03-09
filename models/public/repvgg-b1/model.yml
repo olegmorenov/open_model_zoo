@@ -30,10 +30,6 @@ files:
     size: 12745
     sha256: a0ab4476f4fe6711e4f7cb394bd9e11879cc83bfa1cd6f1d190af53db6a9a464
     source: https://raw.githubusercontent.com/DingXiaoH/RepVGG/faba6fb5cbc27a3956e2e0522e27e065b824c757/repvgg.py
-  - name: convert.py
-    size: 1235
-    sha256: ba5ddee7936bf1ee7999e96526c2b815fd1cfa23549ae8adb8628dbae5a0c8e4
-    source: https://raw.githubusercontent.com/DingXiaoH/RepVGG/faba6fb5cbc27a3956e2e0522e27e065b824c757/convert.py
   - name: RepVGG-B1-train.pth
     size: 230009223
     sha256: fef08fb7dbe34966de425a4d1936c523d67bc05fadfe5228ea39514cbc62e1f5

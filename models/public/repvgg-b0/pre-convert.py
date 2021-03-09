@@ -15,7 +15,8 @@
 # limitations under the License.
 
 import argparse
-import subprocess
+import importlib
+from torch import load
 import sys
 
 from pathlib import Path
@@ -27,12 +28,20 @@ def main():
     parser.add_argument('output_dir', type=Path)
     args = parser.parse_args()
 
-    subprocess.run([sys.executable, '--',
-        str(args.input_dir / 'convert.py'),
-        str(args.input_dir / 'RepVGG-B0-train.pth'),
-        str(args.output_dir / 'RepVGG-B0.pth'),
-        '-a={}'.format('RepVGG-B0'),
-    ], check=True)
+    sys.path.append(str(args.input_dir))
+    repvgg = importlib.import_module('repvgg')
+
+    train_model = repvgg.create_RepVGG_B0(deploy=False)
+
+    checkpoint = load(str(args.input_dir / 'RepVGG-B0-train.pth'))
+    if 'state_dict' in checkpoint:
+        checkpoint = checkpoint['state_dict']
+    ckpt = {k.replace('module.', ''): v for k, v in checkpoint.items()}
+
+    train_model.load_state_dict(ckpt)
+
+    repvgg.repvgg_model_convert(train_model, build_func=repvgg.create_RepVGG_B0,
+                                save_path=str(args.output_dir / 'RepVGG-B0.pth'))
 
 
 if __name__ == '__main__':
