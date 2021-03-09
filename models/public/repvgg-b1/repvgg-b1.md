@@ -15,8 +15,8 @@ For details see [repository](https://github.com/DingXiaoH/RepVGG) and [paper](ht
 | Metric           | Value          |
 | ---------------- | -------------- |
 | Type             | Classification |
-| GFLOPs           | TBD            |
-| MParams          | TBD            |
+| GFLOPs           | 23.6472        |
+| MParams          | 51.8295        |
 | Source framework | PyTorch\*      |
 
 ## Accuracy
