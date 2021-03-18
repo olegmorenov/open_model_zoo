@@ -57,4 +57,5 @@ model_optimizer_args:
   - --reverse_input_channels
   - --output=output
 framework: pytorch
+quantizable: yes
 license: https://raw.githubusercontent.com/DingXiaoH/RepVGG/main/LICENSE
