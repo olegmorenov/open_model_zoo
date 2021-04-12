@@ -1,0 +1,56 @@
+models:
+    - name: iseebetter
+      launchers:
+          - framework: dlsdk
+            adapter: super_resolution
+            inputs:
+                - name: 'input'
+                  type: INPUT
+                  value: 0
+                - name: 'neigbor_1'
+                  type: INPUT
+                  value: 1
+                - name: 'neigbor_2'
+                  type: INPUT
+                  value: 2
+                - name: 'neigbor_3'
+                  type: INPUT
+                  value: 3
+                - name: 'neigbor_4'
+                  type: INPUT
+                  value: 4
+                - name: 'neigbor_5'
+                  type: INPUT
+                  value: 5
+                - name: 'neigbor_6'
+                  type: INPUT
+                  value: 6
+                - name: 'flow_1'
+                  type: INPUT
+                  value: 7
+                - name: 'flow_2'
+                  type: INPUT
+                  value: 8
+                - name: 'flow_3'
+                  type: INPUT
+                  value: 9
+                - name: 'flow_4'
+                  type: INPUT
+                  value: 10
+                - name: 'flow_5'
+                  type: INPUT
+                  value: 11
+                - name: 'flow_6'
+                  type: INPUT
+                  value: 12
+      datasets:
+          - name: Vimeo90K_sr_400
+            reader:
+              type: combine_reader
+              scheme:
+                ".*.png": pillow_imread
+                ".*.npy":
+                    type: numpy_reader
+            metrics:
+                - type: psnr
+                  presenter: print_vector
