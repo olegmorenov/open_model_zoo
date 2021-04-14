@@ -1,0 +1,10 @@
+models:
+    - name: intel_dns
+      launchers:
+        framework: dlsdk
+        adapter: regression
+      datasets:
+          - name: intel_dns_feats
+            metrics:
+                - type: mae
+                  presenter: print_vector
