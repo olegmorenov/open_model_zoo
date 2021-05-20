@@ -1,0 +1,45 @@
+models:
+  - name: yolo_v4
+    launchers:
+      - framework: dlsdk
+        adapter:
+          type: yolo_v3
+          anchors: 12,16,19,36,40,28,36,75,76,55,72,146,142,110,192,243,459,401
+          raw_output: True
+          num: 9
+          coords: 4
+          classes: 80
+          threshold: 0.001
+          outputs:
+            - StatefulPartitionedCall/yolo_v4/predict_conv_3/BiasAdd/Add
+            - StatefulPartitionedCall/yolo_v4/predict_conv_2/BiasAdd/Add
+            - StatefulPartitionedCall/yolo_v4/predict_conv_1/BiasAdd/Add
+          anchor_masks: [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
+    datasets:
+      - name: COCO2017_detection_80cl
+        preprocessing:
+          - type: resize
+            size: 608
+        postprocessing:
+          - type: resize_prediction_boxes
+          - type: filter
+            apply_to: prediction
+            min_confidence: 0.001
+            remove_filtered: true
+          - type: nms
+            overlap: 0.5
+          - type: clip_boxes
+            apply_to: prediction
+        metrics:
+          - type: map
+            integral: 11point
+            ignore_difficult: true
+            presenter: print_scalar
+          - name: AP@0.5
+            type: coco_precision
+            max_detections: 100
+            threshold: 0.5
+          - name: AP@0.5:0.05:0.95
+            type: coco_precision
+            max_detections: 100
+            threshold: '0.5:0.05:0.95'
