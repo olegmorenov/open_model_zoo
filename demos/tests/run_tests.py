@@ -229,7 +229,7 @@ def main():
                                 env=demo_environment)
                             execution_time = timeit.default_timer() - start_time
                         except subprocess.CalledProcessError as e:
-                            print(e.output)
+                            print('Log: ', e.output)
                             print('Exit code:', e.returncode)
                             num_failures += 1
                             execution_time = -1
