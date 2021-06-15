@@ -315,8 +315,9 @@ int main(int argc, char *argv[]) {
                         presenter.handleKey(key);
                     }
                 }
-            }
-        }
+            } // get inference results
+            slog::err << "main loop, frame: " << framesNum << slog::endl;
+        } // main loop
 
         //// --------------------------- Report metrics -------------------------------------------------------
         slog::info << slog::endl << "Metric reports:" << slog::endl;
