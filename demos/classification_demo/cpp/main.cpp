@@ -273,6 +273,7 @@ int main(int argc, char *argv[]) {
 
             //--- Checking for results and rendering data if it's ready
             while ((result = pipeline.getResult(false)) && keepRunning) {
+                slog::info << "in getting result, frame: " << framesNum << slog::endl;
                 const ClassificationResult& classificationResult = result->asRef<ClassificationResult>();
                 if (!classificationResult.metaData) {
                     throw std::invalid_argument("Renderer: metadata is null");
@@ -315,8 +316,9 @@ int main(int argc, char *argv[]) {
                         presenter.handleKey(key);
                     }
                 }
+                slog::info << "out getting result, frame: " << framesNum << slog::endl;
             } // get inference results
-            slog::err << "main loop, frame: " << framesNum << slog::endl;
+            slog::info << "main loop, frame: " << framesNum << slog::endl;
         } // main loop
 
         //// --------------------------- Report metrics -------------------------------------------------------
