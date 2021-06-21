@@ -226,6 +226,7 @@ int main(int argc, char *argv[]) {
             height = std::stoi(gridMatRowsCols[1]);
         }
         GridMat gridMat(presenter, cv::Size(width, height));
+        slog::info << "gridMat, size: " << width << ", " << height << slog::endl;
 
         bool keepRunning = true;
         std::unique_ptr<ResultBase> result;
@@ -241,6 +242,7 @@ int main(int argc, char *argv[]) {
         std::chrono::steady_clock::time_point startTime = std::chrono::steady_clock::now();
 
         while (keepRunning && elapsedSeconds < std::chrono::seconds(FLAGS_time)) {
+            slog::info << "in main loop, frame: " << framesNum << slog::endl;
             if (elapsedSeconds >= testDuration - fpsCalculationDuration && framesNumOnCalculationStart == 0) {
                 framesNumOnCalculationStart = framesNum;
             }
@@ -260,16 +262,20 @@ int main(int argc, char *argv[]) {
             if (pipeline.isReadyToProcess()) {
                 auto imageStartTime = std::chrono::steady_clock::now();
 
+                slog::info << "before pipeline.submitData, index: " << nextImageIndex << ", size: " << inputImages[nextImageIndex].cols << "x" << inputImages[nextImageIndex].rows << slog::endl;
                 pipeline.submitData(ImageInputData(inputImages[nextImageIndex]),
                     std::make_shared<ClassificationImageMetaData>(inputImages[nextImageIndex], imageStartTime, classIndices[nextImageIndex]));
                 nextImageIndex++;
                 if (nextImageIndex == imageNames.size()) {
                     nextImageIndex = 0;
                 }
+                slog::info << "after pipeline.submitData, index: " << nextImageIndex << slog::endl;
             }
 
             //--- Waiting for free input slot or output data available. Function will return immediately if any of them are available.
+            slog::info << "before pipeline.waitForData" << slog::endl;
             pipeline.waitForData(false);
+            slog::info << "after pipeline.waitForData" << slog::endl;
 
             //--- Checking for results and rendering data if it's ready
             while ((result = pipeline.getResult(false)) && keepRunning) {
@@ -318,7 +324,7 @@ int main(int argc, char *argv[]) {
                 }
                 slog::info << "out getting result, frame: " << framesNum << slog::endl;
             } // get inference results
-            slog::info << "main loop, frame: " << framesNum << slog::endl;
+            slog::info << "out main loop, frame: " << framesNum << slog::endl;
         } // main loop
 
         //// --------------------------- Report metrics -------------------------------------------------------
