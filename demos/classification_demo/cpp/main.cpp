@@ -244,9 +244,11 @@ int main(int argc, char *argv[]) {
         while (keepRunning && elapsedSeconds < std::chrono::seconds(FLAGS_time)) {
             slog::info << "in main loop, frame: " << framesNum << slog::endl;
             if (elapsedSeconds >= testDuration - fpsCalculationDuration && framesNumOnCalculationStart == 0) {
+                slog::info << "framesNumOnCalculationStart: " << framesNum << slog::endl;
                 framesNumOnCalculationStart = framesNum;
             }
             if (isTestMode && elapsedSeconds >= testDuration) {
+                slog::info << "isTestMode && elapsedSeconds >= testDuration" << slog::endl;
                 isTestMode = false;
                 typedef std::chrono::duration<double, std::chrono::seconds::period> Sec;
                 gridMat = GridMat(presenter, cv::Size(width, height), cv::Size(16, 9),
@@ -259,6 +261,7 @@ int main(int argc, char *argv[]) {
                 accuracy = 0;
             }
 
+            slog::info << "before pipeline.isReadyToProcess" << slog::endl;
             if (pipeline.isReadyToProcess()) {
                 auto imageStartTime = std::chrono::steady_clock::now();
 
