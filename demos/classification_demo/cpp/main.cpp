@@ -248,17 +248,20 @@ int main(int argc, char *argv[]) {
                 framesNumOnCalculationStart = framesNum;
             }
             if (isTestMode && elapsedSeconds >= testDuration) {
-                slog::info << "isTestMode && elapsedSeconds >= testDuration" << slog::endl;
+                slog::info << "in isTestMode && elapsedSeconds >= testDuration" << slog::endl;
                 isTestMode = false;
                 typedef std::chrono::duration<double, std::chrono::seconds::period> Sec;
+                slog::info << "before GridMat ctor" << slog::endl;
                 gridMat = GridMat(presenter, cv::Size(width, height), cv::Size(16, 9),
                                   (framesNum - framesNumOnCalculationStart) / std::chrono::duration_cast<Sec>(
                                     fpsCalculationDuration).count());
+                slog::info << "after GridMat ctor" << slog::endl;
                 metrics = PerformanceMetrics();
                 startTime = std::chrono::steady_clock::now();
                 framesNum = 0;
                 correctPredictionsCount = 0;
                 accuracy = 0;
+                slog::info << "out isTestMode && elapsedSeconds >= testDuration" << slog::endl;
             }
 
             slog::info << "before pipeline.isReadyToProcess" << slog::endl;
